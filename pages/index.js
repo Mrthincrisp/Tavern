@@ -1,9 +1,21 @@
-// import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
-// import { signOut } from '../utils/auth'; // TODO: COMMENT IN FOR AUTH
-import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
+import { Button } from 'react-bootstrap';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../utils/context/authContext';
+import { getCharacters } from '../api/characterData';
+import CharacterCard from '../components/CharacterCard';
 
 function Home() {
-  const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
+  const { user } = useAuth();
+  const [character, setCharacter] = useState([]);
+
+  const getAllCharacters = () => {
+    getCharacters(user.uid).then(setCharacter);
+  };
+
+  useEffect(() => {
+    getAllCharacters();
+  }, []);
 
   return (
     <div
@@ -16,6 +28,12 @@ function Home() {
       }}
     >
       <h1>Hello {user.displayName}! </h1>
+      {character.map((char) => (
+        <CharacterCard key={char.firebaseKey} charObj={char} />
+      ))}
+      <Link href="character/new" passHref>
+        <Button className="button create create-character-button">Create a Character</Button>
+      </Link>
     </div>
   );
 }
