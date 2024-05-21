@@ -9,7 +9,6 @@ export default function CharacterView({ charObj }) {
 
   useEffect(() => {
     setTempData(charObj);
-    console.warn('charobj', charObj);
   }, [charObj]);
 
   const handleChange = (e) => {

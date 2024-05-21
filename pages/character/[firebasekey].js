@@ -10,7 +10,6 @@ export default function CharacterSheet() {
 
   useEffect(() => {
     getSingleCharacter(firebaseKey).then(setCharacterData);
-    console.warn(characterData);
   }, [firebaseKey]);
 
   return (
