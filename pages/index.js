@@ -14,9 +14,9 @@ function Home() {
   };
 
   useEffect(() => {
-    getAllCharacters(user.id);
+    getAllCharacters(user.uid);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.id]);
+  }, [user.uid]);
 
   return (
     <div
@@ -30,7 +30,7 @@ function Home() {
     >
       <h1>Hello {user.displayName}! </h1>
       {character.map((char) => (
-        <CharacterCard charObj={char} />
+        <CharacterCard charObj={char} onUpdate={getAllCharacters} />
       ))}
       <Link href="character/new" passHref>
         <Button className="button create create-character-button">Create a Character</Button>

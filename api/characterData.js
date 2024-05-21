@@ -58,9 +58,22 @@ const updateCharacter = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteCharacter = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/character/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve((data)))
+    .catch(reject);
+});
+
 export {
   getCharacters,
   getSingleCharacter,
   createCharacter,
   updateCharacter,
+  deleteCharacter,
 };
