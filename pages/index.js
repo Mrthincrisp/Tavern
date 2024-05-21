@@ -14,8 +14,9 @@ function Home() {
   };
 
   useEffect(() => {
-    getAllCharacters();
-  }, []);
+    getAllCharacters(user.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.id]);
 
   return (
     <div
@@ -29,7 +30,7 @@ function Home() {
     >
       <h1>Hello {user.displayName}! </h1>
       {character.map((char) => (
-        <CharacterCard key={char.firebaseKey} charObj={char} />
+        <CharacterCard charObj={char} />
       ))}
       <Link href="character/new" passHref>
         <Button className="button create create-character-button">Create a Character</Button>
