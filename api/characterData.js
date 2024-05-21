@@ -20,8 +20,8 @@ const getCharacters = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getSingleCharacter = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/character/${uid}`, {
+const getSingleCharacter = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/character/${firebaseKey}.json`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
