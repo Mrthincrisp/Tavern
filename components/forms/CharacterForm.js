@@ -24,7 +24,7 @@ const initialState = {
 
 export default function NewCharacterForm({ obj }) {
   const { user } = useAuth();
-  const [formInput, setFormInput] = useState({ initialState, uid: user.uid });
+  const [formInput, setFormInput] = useState({ ...initialState, uid: user.uid });
   const router = useRouter();
 
   const handleChange = (e) => {
