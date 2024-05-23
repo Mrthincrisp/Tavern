@@ -136,7 +136,7 @@ CharacterView.propTypes = {
     firebaseKey: PropTypes.string,
     image: PropTypes.string,
     level: PropTypes.number,
-    class: PropTypes.string,
+    characterClass: PropTypes.string,
     str: PropTypes.number,
     dex: PropTypes.number,
     int: PropTypes.number,
