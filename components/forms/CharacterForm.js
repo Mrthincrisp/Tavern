@@ -12,7 +12,7 @@ const initialState = {
   fullName: '',
   image: '',
   level: '',
-  class: '',
+  characterClass: '',
   str: '',
   dex: '',
   int: '',
@@ -37,17 +37,13 @@ export default function NewCharacterForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.firebaseKey) {
-      updateCharacter(formInput).then(() => router.push('/'));
-    } else {
-      const payload = { ...formInput };
-      createCharacter(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
-        updateCharacter(patchPayload).then(() => {
-          router.push('/');
-        });
+    const payload = { ...formInput };
+    createCharacter(payload).then(({ name }) => {
+      const patchPayload = { firebaseKey: name };
+      updateCharacter(patchPayload).then(() => {
+        router.push('/');
       });
-    }
+    });
   };
 
   return (
@@ -83,7 +79,7 @@ export default function NewCharacterForm({ obj }) {
         <Form.Label>Level</Form.Label>
         <Form.Control
           required
-          type="text"
+          type="number"
           placeholder="What level are they"
           name="level"
           value={formInput.level}
@@ -97,18 +93,24 @@ export default function NewCharacterForm({ obj }) {
           required
           type="text"
           placeholder="Select a Class..."
-          name="class"
-          value={formInput.class}
+          name="characterClass"
+          value={formInput.characterClass}
           onChange={handleChange}
           defaultValue="Select a Class..."
         >
           <option>Choose...</option>
-          <option>Paladin</option>
+          <option>Artificer</option>
+          <option>Barbarian</option>
+          <option>Bard</option>
           <option>Cleric</option>
+          <option>Druid</option>
+          <option>Fighter</option>
+          <option>Monk</option>
+          <option>Paladin</option>
+          <option>Ranger</option>
           <option>Rouge</option>
           <option>Scorcerer</option>
           <option>Warlock</option>
-          <option>Monk</option>
           <option>Wizard</option>
         </Form.Select>
       </Form.Group>
@@ -198,7 +200,7 @@ export default function NewCharacterForm({ obj }) {
           />
         </Form.Group>
       </Row>
-      <Button className="button submit submit-button" variant="primary" type="submit">{obj.firebaseKey ? 'Update' : 'Create'}Character</Button>
+      <Button className="button submit submit-button" variant="primary" type="submit">Create Character</Button>
     </Form>
   );
 }
@@ -209,7 +211,7 @@ NewCharacterForm.propTypes = {
     firebaseKey: PropTypes.string,
     image: PropTypes.string,
     level: PropTypes.number,
-    class: PropTypes.string,
+    characterClass: PropTypes.string,
     str: PropTypes.number,
     dex: PropTypes.number,
     int: PropTypes.number,
