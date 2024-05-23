@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
-import Link from 'next/link';
 import { getSpells } from '../../api/spellData';
 import SpellForm from '../forms/SpellForm';
+import ViewSpellModal from '../ViewSpellModal';
 
 export default function SpellBox({ charObj }) {
   const [spells, setSpells] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [selectSpell, setSelectSpell] = useState(null);
+  // view modal toggles
+  const handleShowViewModal = () => setShowViewModal(true);
+  const handleCloseViewModal = () => setShowViewModal(false);
+  // create modal toggles
+  const handleShowCreateModal = () => setShowCreateModal(true);
+  const handleCloseCreateModal = () => setShowCreateModal(false);
 
   useEffect(() => {
     getSpells(charObj.firebaseKey).then(setSpells);
@@ -18,25 +23,27 @@ export default function SpellBox({ charObj }) {
 
   const reload = () => {
     getSpells(charObj.firebaseKey).then(setSpells);
-    handleCloseModal();
+    handleCloseCreateModal();
+  };
+
+  const handleSpellKey = (firebaseKey) => {
+    setSelectSpell(firebaseKey);
+    handleShowViewModal();
   };
 
   return (
     <div>
-      <Button onClick={handleShowModal}>New Spell</Button>
+      <Button onClick={handleShowCreateModal}>New Spell</Button>
       {spells.map((spell) => (
         <Card key={spell.firebaseKey} style={{ width: '18rem' }}>
           <Card.Body>
-            {console.warn('charObj in spellbox Card', charObj)}
-            {console.warn('spell in spellbox Card', spell)}
             <Card.Title>{spell.spellName}</Card.Title>
-            <Link href={`spells/${charObj.firebaseKey}`} passHref>
-              <Button variant="primary">Details</Button>
-            </Link>
+            <Button variant="primary" onClick={() => handleSpellKey(spell.firebaseKey)}>Details</Button>
           </Card.Body>
         </Card>
       ))}
-      <SpellForm show={showModal} handleClose={handleCloseModal} reload={reload} charObj={charObj} />
+      <SpellForm show={showCreateModal} handleClose={handleCloseCreateModal} reload={reload} charObj={charObj} />
+      { selectSpell && <ViewSpellModal show={showViewModal} handleClose={handleCloseViewModal} spellKey={selectSpell} />}
     </div>
   );
 }
