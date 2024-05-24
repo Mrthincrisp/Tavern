@@ -12,12 +12,12 @@ export default function CharacterCard({ charObj, onUpdate }) {
   };
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className="selection-card">
       <Card.Img variant="top" src={charObj.image} />
       <Card.Body>
         <Card.Title>{charObj.fullName}</Card.Title>
         <Link href={`/character/${charObj.firebaseKey}`} passHref>
-          <Button variant="primary">play</Button>
+          <Button className="button play" variant="primary">play</Button>
         </Link>
         <Button className="button delete" onClick={characterDeleter}>Delete</Button>
       </Card.Body>

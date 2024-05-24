@@ -33,9 +33,9 @@ export default function SpellBox({ charObj }) {
 
   return (
     <div>
-      <Button onClick={handleShowCreateModal}>New Spell</Button>
+      <Button className="button" onClick={handleShowCreateModal}>New Spell</Button>
       {spells.map((spell) => (
-        <Card key={spell.firebaseKey} style={{ width: '18rem' }}>
+        <Card className="spell-card" key={spell.firebaseKey} style={{ width: '18rem' }}>
           <Card.Body>
             <Card.Title>{spell.spellName}</Card.Title>
             <Button variant="primary" onClick={() => handleSpellKey(spell.firebaseKey)}>Details</Button>
@@ -43,7 +43,7 @@ export default function SpellBox({ charObj }) {
         </Card>
       ))}
       <SpellForm show={showCreateModal} handleClose={handleCloseCreateModal} reload={reload} charObj={charObj} />
-      { selectSpell && <ViewSpellModal show={showViewModal} handleClose={handleCloseViewModal} spellKey={selectSpell} />}
+      { selectSpell && <ViewSpellModal show={showViewModal} handleClose={handleCloseViewModal} spellKey={selectSpell} reload={reload} />}
     </div>
   );
 }
