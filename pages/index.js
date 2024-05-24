@@ -19,22 +19,16 @@ function Home() {
   }, [user.uid]);
 
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.displayName}! </h1>
-      {character.map((char) => (
-        <CharacterCard charObj={char} onUpdate={getAllCharacters} />
-      ))}
+    <div>
+      <h1 className="header">Hello {user.displayName}! </h1>
       <Link href="character/new" passHref>
         <Button className="button create create-character-button">Create a Character</Button>
       </Link>
+      <div className="character-card">
+        {character.map((char) => (
+          <CharacterCard charObj={char} onUpdate={getAllCharacters} />
+        ))}
+      </div>
     </div>
   );
 }

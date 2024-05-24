@@ -21,11 +21,92 @@ body {
   background-color: #8a714b;
 }
 
-.character-image{
+.view-image{
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* This creates a circular shape */
-  object-fit: cover; /* Ensures the image covers the entire area */
-  border: 2px solid #fff; /* Adds a white border */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a slight shadow */
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 2px solid #fff; 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.header{
+  text-align: center;
+}
+
+.button {
+  margin: 2px;
+}
+
+.character-card {
+  height: 90vh;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; 
+  gap: 10px;
+}
+
+.selection-card {
+  flex: 1 1 30%; /* Adjust as needed for the number of cards in a row */
+  max-width: 70%; /* Ensure consistent width */
+  height: 300px; /* Fixed height for the cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spell-card{
+  flex: 1 1 30%; /* Adjust as needed for the number of cards in a row */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selection-card img {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+}
+
+.character-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modifiers {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.layout-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.character-view {
+  flex: 1;
+  margin-right: 10px; 
+}
+
+.spell-box {
+  flex: 2;
+  margin-left: 10px; 
 }

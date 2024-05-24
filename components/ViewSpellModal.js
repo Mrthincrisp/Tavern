@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { getSingleSpell, updateSpell } from '../api/spellData';
+import { deleteSpell, getSingleSpell, updateSpell } from '../api/spellData';
 
 const initialState = {
   spellName: '',
   description: '',
 };
 
-export default function ViewSpellModal({ show, handleClose, spellKey }) {
+export default function ViewSpellModal({
+  show, handleClose, spellKey, reload,
+}) {
   const [edit, setEdit] = useState(false);
   const [tempData, setTempData] = useState({ ...initialState });
+
+  const spellDeleter = () => {
+    if (window.confirm('Do you want to delete this spell?')) {
+      deleteSpell(spellKey).then(handleClose).then(reload);
+    }
+  };
 
   useEffect(() => {
     getSingleSpell(spellKey).then(setTempData);
@@ -65,6 +73,7 @@ export default function ViewSpellModal({ show, handleClose, spellKey }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
+          <Button className="delete" onClick={spellDeleter}>Delete</Button>
         </Modal.Footer>
       </Modal>
     </>
@@ -75,6 +84,7 @@ ViewSpellModal.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   spellKey: PropTypes.string.isRequired,
+  reload: PropTypes.func.isRequired,
   tempData: PropTypes.shape({
     spellName: PropTypes.string,
     description: PropTypes.string,

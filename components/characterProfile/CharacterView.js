@@ -32,7 +32,7 @@ export default function CharacterView({ charObj }) {
     <Card className="character-container">
       <div>
         <Card.Img
-          className="character-image"
+          className="view-image"
           src={tempData.image}
         />
       </div>
@@ -74,10 +74,12 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          Deception: {modifier(tempData.chr)}
-          Intimidation: {modifier(tempData.chr)}
-          Performance: {modifier(tempData.chr)}
-          Survival: {modifier(tempData.chr)}
+          <div className="modifiers">
+            Deception: {modifier(tempData.chr)}
+            <div>Intimidation: {modifier(tempData.chr)}</div>
+            <div>Performance: {modifier(tempData.chr)}</div>
+            <div>Survival: {modifier(tempData.chr)}</div>
+          </div>
         </Card.Text>
         <Card.Text className="stat">Strength: <input
           className="input character-str"
@@ -86,7 +88,9 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          Athletics: {modifier(tempData.str)}
+          <div className="modifiers">
+            Athletics: {modifier(tempData.str)}
+          </div>
         </Card.Text>
         <Card.Text className="stat">Dexterity: <input
           className="input character-dex"
@@ -95,9 +99,11 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          Acrobatics: {modifier(tempData.dex)}
-          Sleight of Hand: {modifier(tempData.dex)}
-          Stealth:  {modifier(tempData.dex)}
+          <div className="modifiers">
+            <div>Acrobatics: {modifier(tempData.dex)}</div>
+            <div>Sleight of Hand: {modifier(tempData.dex)}</div>
+            <div>Stealth: {modifier(tempData.dex)}</div>
+          </div>
         </Card.Text>
         <Card.Text className="stat">Intelligencen: <input
           className="input character-int"
@@ -106,11 +112,13 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          Arcana: {modifier(tempData.int)}
-          History: {modifier(tempData.int)}
-          Investigation: {modifier(tempData.int)}
-          Nature: {modifier(tempData.int)}
-          Religion: Arcana: {modifier(tempData.int)}
+          <div className="modifiers">
+            <div>Arcana: {modifier(tempData.int)}</div>
+            <div>History: {modifier(tempData.int)}</div>
+            <div>Investigation: {modifier(tempData.int)}</div>
+            <div>Nature: {modifier(tempData.int)}</div>
+            <div>Religion: {modifier(tempData.int)}</div>
+          </div>
         </Card.Text>
         <Card.Text className="stat">Wisdom: <input
           className="input character-wis"
@@ -119,11 +127,13 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          Animal Handling: {modifier(tempData.wis)}
-          Insight: {modifier(tempData.wis)}
-          Medicine: {modifier(tempData.wis)}
-          Perception: {modifier(tempData.wis)}
-          Survival: {modifier(tempData.wis)}
+          <div className="modifiers">
+            <div>Animal Handling: {modifier(tempData.wis)}</div>
+            <div>Insight: {modifier(tempData.wis)}</div>
+            <div>Medicine: {modifier(tempData.wis)}</div>
+            <div>Perception: {modifier(tempData.wis)}</div>
+            <div>Survival: {modifier(tempData.wis)}</div>
+          </div>
         </Card.Text>
       </div>
     </Card>

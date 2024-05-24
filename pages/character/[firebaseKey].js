@@ -14,13 +14,13 @@ export default function CharacterSheet() {
   }, [firebaseKey]);
 
   return (
-    <>
-      <div>
+    <div className="layout-container">
+      <div className="character-view">
         <CharacterView charObj={characterData} />
       </div>
-      <div>
+      <div className="spell-box">
         <SpellBox charObj={characterData} />
       </div>
-    </>
+    </div>
   );
 }
