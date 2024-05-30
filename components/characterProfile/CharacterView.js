@@ -3,55 +3,72 @@ import { Button, Card, Form } from 'react-bootstrap';
 import { PropTypes } from 'prop-types';
 import { updateCharacter } from '../../api/characterData';
 
-export default function CharacterView({ charObj }) {
-  const [edit, setEdit] = useState(false);
-  const [tempData, setTempData] = useState({});
+export default function CharacterView({ charObj }) { // charObj contains all data from the created characters
+  const [edit, setEdit] = useState(false); // sets the state for the edit toggle
+  const [tempData, setTempData] = useState({}); // state that contains the data to be edited
 
   useEffect(() => {
-    setTempData(charObj);
-  }, [charObj]);
+    setTempData(charObj); // stores character data in tempdata
+  }, [charObj]); // effect re-initializes if the charObj is changed
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTempData({
       ...tempData,
-      [name]: value,
+      [name]: value, // targets the matching keys in ...tempData
     });
   };
 
   const characterUpdater = () => {
-    updateCharacter(tempData).then(setEdit(false));
+    updateCharacter(tempData).then(setEdit(false)); // changes charcter data to the current tempData, and then prevents more editing.
   };
 
+  // modifier formula for the extra stats based off of the dnd rules
   const modifier = (stat) => {
     const mod = Math.floor((stat - 10) / 2);
     return mod;
   };
-
+  // returns a card/form that users can view their character, and edit stats of a character on the same page
   return (
     <Card className="character-container">
+      <Form.Check
+        type="switch" // this is the toggle for the edit option
+        id="editCharacterToggle"
+        label="Change Character Stats"
+        checked={edit}
+        onChange={() => { setEdit(!edit); }} // changes the state to the opposite of whatever is current
+      /> {charObj.characterClass} {charObj.level}
       <div>
-        <Card.Img
-          className="view-image"
-          src={tempData.image}
-        />
+        <Card.Img className="view-image" src={tempData.image} />
       </div>
-      <h4>{tempData.fullName}</h4>
-      <div className="health-box">
-        <Form.Check
-          type="switch"
-          id="editToggle"
-          label="Character Stats"
-          checked={edit}
-          onChange={() => { setEdit(!edit); }}
+      {edit && (
+        <input
+          className="input character-image-input"
+          type="text"
+          name="image"
+          value={tempData?.image || ''} // ? and || '' are needed to prevent an error for undefined states when the DOM is rendering without mounted components yet
+          onChange={handleChange}
+          placeholder="Enter image URL"
         />
-        {edit && (
-          <Button onClick={characterUpdater} className="save">save</Button>
-        )}
-      </div>
+      )}
+      <h4 className="stat">
+        <input
+          className="input character-fullName"
+          type="text"
+          name="fullName"
+          value={tempData?.fullName || ''}
+          onChange={handleChange}
+          readOnly={!edit}
+        />
+
+      </h4>
+      {edit && (
+      <Button onClick={characterUpdater} className="save">save</Button>
+      )}
+      <div className="health-box" />
       <div className="stat-box"> STATS
         <Card.Text>
-          HP: current/ <input
+          HP: <input
             className="input character-health"
             name="hp"
             value={tempData?.hp || ''}
@@ -59,6 +76,7 @@ export default function CharacterView({ charObj }) {
             readOnly={!edit}
           />
         </Card.Text>
+
         <Card.Text className="stat">Constitution: <input
           className="input character-con"
           name="con"
@@ -67,6 +85,7 @@ export default function CharacterView({ charObj }) {
           readOnly={!edit}
         />
         </Card.Text>
+
         <Card.Text className="stat">Charisma: <input
           className="input character-chr"
           name="chr"
@@ -74,13 +93,14 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          <div className="modifiers">
+          <span className="modifiers">
             Deception: {modifier(tempData.chr)}
-            <div>Intimidation: {modifier(tempData.chr)}</div>
-            <div>Performance: {modifier(tempData.chr)}</div>
-            <div>Survival: {modifier(tempData.chr)}</div>
-          </div>
+            <span>Intimidation: {modifier(tempData.chr)}</span> {/* span is used because card.text is considered a <p> tag */}
+            <span>Performance: {modifier(tempData.chr)}</span>
+            <span>Survival: {modifier(tempData.chr)}</span>
+          </span>
         </Card.Text>
+
         <Card.Text className="stat">Strength: <input
           className="input character-str"
           name="str"
@@ -88,10 +108,11 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          <div className="modifiers">
+          <span className="modifiers">
             Athletics: {modifier(tempData.str)}
-          </div>
+          </span>
         </Card.Text>
+
         <Card.Text className="stat">Dexterity: <input
           className="input character-dex"
           name="dex"
@@ -99,12 +120,13 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          <div className="modifiers">
-            <div>Acrobatics: {modifier(tempData.dex)}</div>
-            <div>Sleight of Hand: {modifier(tempData.dex)}</div>
-            <div>Stealth: {modifier(tempData.dex)}</div>
-          </div>
+          <span className="modifiers">
+            <span>Acrobatics: {modifier(tempData.dex)}</span>
+            <span>Sleight of Hand: {modifier(tempData.dex)}</span>
+            <span>Stealth: {modifier(tempData.dex)}</span>
+          </span>
         </Card.Text>
+
         <Card.Text className="stat">Intelligencen: <input
           className="input character-int"
           name="int"
@@ -112,14 +134,15 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          <div className="modifiers">
-            <div>Arcana: {modifier(tempData.int)}</div>
-            <div>History: {modifier(tempData.int)}</div>
-            <div>Investigation: {modifier(tempData.int)}</div>
-            <div>Nature: {modifier(tempData.int)}</div>
-            <div>Religion: {modifier(tempData.int)}</div>
-          </div>
+          <span className="modifiers">
+            <span>Arcana: {modifier(tempData.int)}</span>
+            <span>History: {modifier(tempData.int)}</span>
+            <span>Investigation: {modifier(tempData.int)}</span>
+            <span>Nature: {modifier(tempData.int)}</span>
+            <span>Religion: {modifier(tempData.int)}</span>
+          </span>
         </Card.Text>
+
         <Card.Text className="stat">Wisdom: <input
           className="input character-wis"
           name="wis"
@@ -127,19 +150,19 @@ export default function CharacterView({ charObj }) {
           onChange={handleChange}
           readOnly={!edit}
         />
-          <div className="modifiers">
-            <div>Animal Handling: {modifier(tempData.wis)}</div>
-            <div>Insight: {modifier(tempData.wis)}</div>
-            <div>Medicine: {modifier(tempData.wis)}</div>
-            <div>Perception: {modifier(tempData.wis)}</div>
-            <div>Survival: {modifier(tempData.wis)}</div>
-          </div>
+          <span className="modifiers">
+            <span>Animal Handling: {modifier(tempData.wis)}</span>
+            <span>Insight: {modifier(tempData.wis)}</span>
+            <span>Medicine: {modifier(tempData.wis)}</span>
+            <span>Perception: {modifier(tempData.wis)}</span>
+            <span>Survival: {modifier(tempData.wis)}</span>
+          </span>
         </Card.Text>
       </div>
     </Card>
   );
 }
-
+// required properties for the component to function properly
 CharacterView.propTypes = {
   charObj: PropTypes.shape({
     fullName: PropTypes.string,

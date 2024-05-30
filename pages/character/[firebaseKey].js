@@ -19,7 +19,7 @@ export default function CharacterSheet() {
         <CharacterView charObj={characterData} />
       </div>
       <div className="spell-box">
-        <SpellBox charObj={characterData} />
+        <SpellBox charKey={characterData.firebaseKey} />
       </div>
     </div>
   );

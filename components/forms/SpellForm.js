@@ -4,13 +4,12 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { createSpell, updateSpell } from '../../api/spellData';
 
 const initialState = {
-  characterId: '',
   description: '',
   spellName: '',
 };
 
 export default function SpellForm({
-  show, handleClose, reload, charObj,
+  show, handleClose, reload, charKey,
 }) {
   const [formInput, setformInput] = useState({ ...initialState });
 
@@ -26,9 +25,10 @@ export default function SpellForm({
     e.preventDefault();
     const payload = { ...formInput };
     createSpell(payload).then(({ name }) => {
-      const patchPayload = { firebaseKey: name, characterId: charObj.firebaseKey };
+      const patchPayload = { firebaseKey: name, characterId: charKey };
       updateSpell(patchPayload).then(() => {
         reload();
+        setformInput(initialState);
       });
     });
   };
@@ -61,7 +61,7 @@ export default function SpellForm({
               onChange={handleChange}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="button">
             Create New Spell
           </Button>
         </Form>
@@ -76,10 +76,8 @@ export default function SpellForm({
 }
 
 SpellForm.propTypes = {
-  show: PropTypes.bool.isRequired,
-  reload: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  charObj: PropTypes.shape({
-    firebaseKey: PropTypes.string,
-  }).isRequired,
-};
+  show: PropTypes.bool,
+  reload: PropTypes.func,
+  handleClose: PropTypes.func,
+  charKey: PropTypes.string,
+}.isRequired;

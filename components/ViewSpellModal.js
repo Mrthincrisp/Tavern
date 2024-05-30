@@ -11,8 +11,8 @@ const initialState = {
 export default function ViewSpellModal({
   show, handleClose, spellKey, reload,
 }) {
-  const [edit, setEdit] = useState(false);
-  const [tempData, setTempData] = useState({ ...initialState });
+  const [edit, setEdit] = useState(false); // toggle for editing data
+  const [tempData, setTempData] = useState({ ...initialState }); // used to store data when changing data
 
   const spellDeleter = () => {
     if (window.confirm('Do you want to delete this spell?')) {
@@ -33,35 +33,32 @@ export default function ViewSpellModal({
   };
 
   const spellUpdate = () => {
-    updateSpell(tempData).then(setEdit(false));
+    updateSpell(tempData).then(setEdit(false)).then(reload);
   };
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+      >
         <Modal.Header>
-          <Form.Check
-            type="switch"
-            id="editToggle"
-            label="Spell data"
-            checked={edit}
-            onChange={() => { setEdit(!edit); }}
-          />
-          {edit && (
-          <Button onClick={spellUpdate} className="save">save</Button>
-          )}
+
           <Modal.Title className="input spell-input spell-name">
             <input
+              className="input"
               type="text"
               name="spellName"
-              value={tempData?.spellName || ''}
+              value={tempData?.spellName || ''} // ? and || '' needed to prevent warning when data is being loaded
               onChange={handleChange}
               readOnly={!edit}
             />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="input spell-input spell-description">
-          <input
+          <textarea
+            className="input description-field"
             type="text"
             name="description"
             value={tempData?.description || ''}
@@ -70,6 +67,16 @@ export default function ViewSpellModal({
           />
         </Modal.Body>
         <Modal.Footer>
+          {edit && (
+          <Button onClick={spellUpdate} className="save">save</Button>
+          )}
+          <Form.Check
+            type="switch"
+            id="editSpellToggle"
+            label="Spell data"
+            checked={edit}
+            onChange={() => { setEdit(!edit); }}
+          />
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
@@ -85,8 +92,4 @@ ViewSpellModal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   spellKey: PropTypes.string.isRequired,
   reload: PropTypes.func.isRequired,
-  tempData: PropTypes.shape({
-    spellName: PropTypes.string,
-    description: PropTypes.string,
-  }).isRequired,
-};
+}.isRequired;
