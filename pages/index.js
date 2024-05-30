@@ -26,7 +26,7 @@ function Home() {
       </Link>
       <div className="character-card">
         {character.map((char) => (
-          <CharacterCard charObj={char} onUpdate={getAllCharacters} />
+          <CharacterCard key={char.firebaseKey} charObj={char} onUpdate={getAllCharacters} />
         ))}
       </div>
     </div>

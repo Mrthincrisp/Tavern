@@ -32,6 +32,18 @@ const getSingleSpell = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getCharacterSpells = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/spells.json?orderBy="characterId"&equalTo="${firebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 const createSpell = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/spells.json`, {
     method: 'POST',
@@ -76,4 +88,5 @@ export {
   getSingleSpell,
   createSpell,
   updateSpell,
+  getCharacterSpells,
 };
