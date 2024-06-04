@@ -29,7 +29,7 @@ const updateNote = (payload) => new Promise((resolve, reject) => {
 });
 
 const getNotes = (characterId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/notes.json?orderBy="uid"&equalTo="${characterId}"`, {
+  fetch(`${endpoint}/notes.json?orderBy="characterId"&equalTo="${characterId}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -58,9 +58,22 @@ const getSingleNote = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteNote = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/notes/${firebaseKey}.json`, {
+    method: 'Delete',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   createNote,
   updateNote,
   getNotes,
   getSingleNote,
+  deleteNote,
 };
