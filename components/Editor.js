@@ -1,11 +1,13 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, {
+  useState, useRef, useCallback, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
-  Editor, EditorState, RichUtils, convertToRaw, getDefaultKeyBinding,
+  Editor, EditorState, RichUtils, convertFromRaw, convertToRaw, getDefaultKeyBinding,
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button } from 'react-bootstrap';
-import { createNote, updateNote } from '../api/noteData';
+import { updateNote } from '../api/noteData';
 
 // Custom overrides for "code" style.
 const styleMap = {
@@ -126,7 +128,7 @@ InlineStyleControls.propTypes = {
   onToggle: PropTypes.func,
 }.isRequired;
 
-const RichTextEditor = () => {
+const RichTextEditor = ({ noteID, content, onSave }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty()); // Holds the current state of the Editor
   const editorRef = useRef(null); // ref to access the editor DOM node, useRef is used to
 
@@ -174,18 +176,23 @@ const RichTextEditor = () => {
     }
   }
 
-  const submitRichTextEditor = () => {
-    const content = editorState.getCurrentContent();
-    const rawContentState = JSON.stringify(convertToRaw(content));
-    createNote({ content: rawContentState }).then(({ name }) => {
-      const patchPayload = { firebaseKey: name };
-      updateNote(patchPayload);
-    });
+  useEffect(() => { // converts content from Json to readable/editable data
+    if (content) {
+      const contentText = convertFromRaw(JSON.parse(content));
+      setEditorState(EditorState.createWithContent(contentText));
+    }
+  }, [content]);
+
+  const updateTextContent = () => {
+    const contentData = editorState.getCurrentContent();
+    const rawContentState = JSON.stringify(convertToRaw(contentData));
+    const payload = { firebaseKey: noteID, content: rawContentState };
+    updateNote(payload).then(onSave);
   };
 
   return (
     <div className="RichEditor-root">
-      <Button onClick={submitRichTextEditor}>save</Button>
+      <Button onClick={updateTextContent}>save</Button>
       <BlockStyleControls editorState={editorState} onToggle={toggleBlockType} /> {/* import of the functions above */}
       <InlineStyleControls editorState={editorState} onToggle={toggleInlineStyle} /> {/* import of the functions above */}
       <div
@@ -211,5 +218,11 @@ const RichTextEditor = () => {
     </div>
   );
 };
+
+RichTextEditor.propTypes = {
+  noteID: PropTypes.string,
+  onSave: PropTypes.func,
+  content: PropTypes.object,
+}.isRequired;
 
 export default RichTextEditor;
