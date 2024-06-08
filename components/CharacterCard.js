@@ -1,22 +1,15 @@
 import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import deleteCharacterAndSpells from '../api/mergedData';
-import { useCharacter } from './CharacterId';
+import deleteCharacterAndRelatedData from '../api/mergedData';
 // import { useAuth } from '../utils/context/authContext';
 
 export default function CharacterCard({ charObj, onUpdate }) {
-  const { setCharacterID } = useCharacter();
-
   const characterDeleter = () => {
     if (window.confirm(`Kick ${charObj.fullName} out of the Tavern?`)) {
-      deleteCharacterAndSpells(charObj.firebaseKey).then(() => onUpdate());
+      deleteCharacterAndRelatedData(charObj.firebaseKey).then(() => onUpdate());
     }
   };
-
-  const handleID = () => {
-    setCharacterID(charObj.firebaseKey);
-  }; // sets the "global ID" to the selected character's firebaseKey
 
   return (
     <Card className="selection-card">
@@ -31,7 +24,7 @@ export default function CharacterCard({ charObj, onUpdate }) {
       <Card.Body className="card-body">
         <div className="button-group">
           <Link href={`/character/${charObj.firebaseKey}`} passHref>
-            <Button className="button play" variant="primary" onClick={handleID}>Play</Button>
+            <Button className="button play" variant="primary">Play</Button>
           </Link>
           <Button className="button delete" onClick={characterDeleter}>Delete</Button>
         </div>
