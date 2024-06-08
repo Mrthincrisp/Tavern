@@ -70,10 +70,23 @@ const deleteNote = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getCharacterNotes = (characterId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/notes.json?orderBy="characterId"&equalTo="${characterId}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 export {
   createNote,
   updateNote,
   getNotes,
   getSingleNote,
   deleteNote,
+  getCharacterNotes,
 };

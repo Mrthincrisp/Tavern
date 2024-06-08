@@ -72,7 +72,6 @@ body {
 
 .selection-card {
   flex: 0 0 20%;
-  max-width: 25%; 
   height: auto;
   display: flex;
   flex-direction: column;
@@ -185,9 +184,11 @@ body {
 .RichEditor-root {
   background: #fff;
   border: 1px solid #ddd;
+  border-radius: 25px;
   font-family: 'Georgia', serif;
   font-size: 14px;
   padding: 15px;
+  margin: 0 10px 0 5px;
 }
 
 .RichEditor-editor {
@@ -245,4 +246,16 @@ body {
 
 .RichEditor-activeButton {
   color: #5890ff;
+}
+
+.note-content {
+  display: flex;
+}
+
+.editor-tab-box {
+  width: 20%; 
+}
+
+.editor-display-box {
+  flex: 1; 
 }

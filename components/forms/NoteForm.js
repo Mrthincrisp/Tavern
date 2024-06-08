@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 import { createNote, updateNote } from '../../api/noteData';
-import { useCharacter } from '../CharacterId';
 
 const initialState = {
   noteTitle: '',
@@ -12,7 +12,8 @@ export default function NoteForm({
   show, handleClose, reload,
 }) {
   const [formInput, setFormInput] = useState({ ...initialState });
-  const { characterID } = useCharacter();
+  const router = useRouter();
+  const { firebaseKey } = router.query;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +27,7 @@ export default function NoteForm({
     e.preventDefault();
     const payload = { ...formInput };
     createNote(payload).then(({ name }) => {
-      const patchPayload = { firebaseKey: name, characterId: characterID };
+      const patchPayload = { firebaseKey: name, characterId: firebaseKey };
       updateNote(patchPayload).then(() => {
         reload();
         setFormInput(initialState);

@@ -4,10 +4,8 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import { getCharacters } from '../api/characterData';
 import CharacterCard from '../components/CharacterCard';
-// import { useCharacter } from '../components/CharacterId';
 
 function Home() {
-  // const { characterID } = useCharacter();
   const { user } = useAuth();
   const [character, setCharacter] = useState([]);
 

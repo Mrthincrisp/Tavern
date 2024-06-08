@@ -128,9 +128,12 @@ InlineStyleControls.propTypes = {
   onToggle: PropTypes.func,
 }.isRequired;
 
+// ***THE ACTUAL EDITOR COMPONENT IS HERE***
+
 const RichTextEditor = ({ noteID, content, onSave }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty()); // Holds the current state of the Editor
   const editorRef = useRef(null); // ref to access the editor DOM node, useRef is used to
+  // const [baseContent, setBaseContent] = useState(null);
 
   const focus = () => editorRef.current.focus(); // focus on the editor when wanted
 
@@ -180,10 +183,12 @@ const RichTextEditor = ({ noteID, content, onSave }) => {
     if (content) {
       const contentText = convertFromRaw(JSON.parse(content));
       setEditorState(EditorState.createWithContent(contentText));
+    } else {
+      setEditorState(EditorState.createEmpty());
     }
   }, [content]);
 
-  const updateTextContent = () => {
+  const updateTextContent = () => { // update function for submitting updated content
     const contentData = editorState.getCurrentContent();
     const rawContentState = JSON.stringify(convertToRaw(contentData));
     const payload = { firebaseKey: noteID, content: rawContentState };
