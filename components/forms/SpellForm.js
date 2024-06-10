@@ -39,7 +39,7 @@ export default function SpellForm({
         <Modal.Title>Create New Spell</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form className="new-spell-form" onSubmit={handleSubmit}>
+        <Form className="new-form" onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Name</Form.Label>
             <Form.Control
