@@ -80,7 +80,7 @@ export default function NewCharacterForm() {
         <Form.Control
           required
           type="number"
-          placeholder="What level are they"
+          placeholder="1"
           name="level"
           value={formInput.level}
           onChange={handleChange}

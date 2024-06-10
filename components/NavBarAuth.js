@@ -35,6 +35,11 @@ export default function NavBarAuth() {
                     <Nav.Link>Notebook</Nav.Link>
                   </Link>
                 </Nav>
+                <Nav className="link">
+                  <Link passHref href={`/character/inventory/${firebaseKey}`}>
+                    <Nav.Link>Inventory</Nav.Link>
+                  </Link>
+                </Nav>
               </>
             )}
           </Nav>

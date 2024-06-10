@@ -22,11 +22,6 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
     });
   };
 
-  useEffect(() => {
-    console.warn('temp', tempData);
-    console.warn('init', initData);
-  }, [initData, tempData]);
-
   const characterUpdater = () => {
     updateCharacter(tempData).then(setEdit(false)); // changes charcter data to the current tempData, and then prevents more editing.
     setInitData(tempData);
