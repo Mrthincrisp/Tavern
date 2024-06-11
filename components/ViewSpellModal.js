@@ -3,16 +3,11 @@ import PropTypes from 'prop-types';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { deleteSpell, getSingleSpell, updateSpell } from '../api/spellData';
 
-const initialState = {
-  spellName: '',
-  description: '',
-};
-
 export default function ViewSpellModal({
   show, handleClose, spellKey, reload,
 }) {
   const [edit, setEdit] = useState(false); // toggle for editing data
-  const [tempData, setTempData] = useState({ ...initialState }); // used to store data when changing data
+  const [tempData, setTempData] = useState({}); // used to store data when changing data
 
   const spellDeleter = () => {
     if (window.confirm('Do you want to delete this spell?')) {
@@ -73,7 +68,7 @@ export default function ViewSpellModal({
           <Form.Check
             type="switch"
             id="editSpellToggle"
-            label="Spell data"
+            label="Edit"
             checked={edit}
             onChange={() => { setEdit(!edit); }}
           />
@@ -88,8 +83,8 @@ export default function ViewSpellModal({
 }
 
 ViewSpellModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  spellKey: PropTypes.string.isRequired,
-  reload: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  handleClose: PropTypes.func,
+  spellKey: PropTypes.string,
+  reload: PropTypes.func,
 }.isRequired;

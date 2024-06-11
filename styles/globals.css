@@ -259,3 +259,7 @@ body {
 .editor-display-box {
   flex: 1; 
 }
+
+.item-card {
+  cursor: pointer;
+}

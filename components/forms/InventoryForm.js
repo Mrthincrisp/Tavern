@@ -29,11 +29,12 @@ export default function InventoryForm({
   const { firebaseKey } = router.query;
 
   const dependentFormState = itemType === 'gear'
-    ? { ...initialState, characterId: firebaseKey } : {
+    ? { ...initialState, characterId: firebaseKey, type: itemType } : {
       itemName: '',
       specialEffect: '',
       quantity: 1,
       characterId: firebaseKey,
+      type: 'item',
     };
 
   const [formInput, setFormInput] = useState(dependentFormState);
@@ -156,6 +157,28 @@ export default function InventoryForm({
                       type="number"
                       name="hp"
                       value={formInput.hp}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="formGridAtkBonus">
+                    <Form.Label>Attack Bonus</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      name="attackBonus"
+                      value={formInput.attackBonus}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="formGridDmgbonus">
+                    <Form.Label>Damage Bonus</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      name="damageBonus"
+                      value={formInput.damageBonus}
                       onChange={handleChange}
                     />
                   </Form.Group>

@@ -6,7 +6,7 @@ import WindowWarning from '../WindowWarning';
 
 export default function CharacterView({ charObj }) { // charObj contains all data from the created characters
   const [edit, setEdit] = useState(false); // sets the state for the edit toggle
-  const [initData, setInitData] = useState({});
+  const [initData, setInitData] = useState({}); // used in part of a check if data is changed
   const [tempData, setTempData] = useState({}); // state that contains the data to be edited
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
     const { name, value } = e.target;
     setTempData({
       ...tempData,
-      [name]: value, // targets the matching keys in ...tempData
+      [name]: value, // targets the matching keys in ...tempData [] makes the name dynamic for each field, and value the input for that field.
     });
   };
 
@@ -33,17 +33,17 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
     return mod;
   };
 
-  const hasUnsavedChanges = () => initData !== tempData;
+  const hasUnsavedChanges = () => initData !== tempData; // checks if current data is different from ost recent save
 
   // returns a card/form that users can view their character, and edit stats of a character on the same page
   return (
-    <WindowWarning hasUnsavedChanges={hasUnsavedChanges}>
+    <WindowWarning hasUnsavedChanges={hasUnsavedChanges}> {/* A wrap component to throw a warning if data is unsaved */}
 
       <Card className="character-container">
         <Form.Check
           type="switch" // this is the toggle for the edit option
           id="editCharacterToggle"
-          label="Change Character Stats"
+          label="Edit Character"
           checked={edit}
           onChange={() => { setEdit(!edit); }}
         /> {charObj.characterClass} {charObj.level}
