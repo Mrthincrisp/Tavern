@@ -7,7 +7,7 @@ import {
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button } from 'react-bootstrap';
-import { updateNote } from '../api/noteData';
+import { updateNote } from '../../api/noteData';
 
 // Custom overrides for "code" style.
 const styleMap = {
@@ -230,4 +230,9 @@ RichTextEditor.propTypes = {
   content: PropTypes.object,
 }.isRequired;
 
-export default RichTextEditor;
+export {
+  RichTextEditor,
+  InlineStyleControls,
+  BlockStyleControls,
+  StyleButton,
+};
