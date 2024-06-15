@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import RichTextEditor from '../../../../components/Editor';
+import RichTextEditor from '../../../../components/editor/Editor';
 import NoteTabCard from '../../../../components/NoteTabCard';
 import { getNotes } from '../../../../api/noteData';
 import NoteForm from '../../../../components/forms/NoteForm';

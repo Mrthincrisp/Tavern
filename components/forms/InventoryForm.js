@@ -20,6 +20,7 @@ const initialState = {
   damageBonus: 0,
   specialEffect: '',
   quantity: 1,
+  equiped: false,
 };
 
 export default function InventoryForm({
@@ -35,6 +36,7 @@ export default function InventoryForm({
       quantity: 1,
       characterId: firebaseKey,
       type: 'item',
+      equiped: false,
     };
 
   const [formInput, setFormInput] = useState(dependentFormState);
@@ -57,7 +59,10 @@ export default function InventoryForm({
     const payload = { ...formInput };
     createItem(payload).then(({ name }) => {
       const patchPayload = { firebaseKey: name };
-      updateItem(patchPayload).then(reload);
+      updateItem(patchPayload).then(() => {
+        reload();
+        setFormInput(initialState);
+      });
     });
   };
 
@@ -245,6 +250,7 @@ InventoryForm.propTypes = {
     damageBonus: PropTypes.number,
     specialEffect: PropTypes.string,
     quantity: PropTypes.number,
+    equiped: PropTypes.bool,
   }),
 };
 

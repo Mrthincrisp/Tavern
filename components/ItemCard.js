@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { deleteItem } from '../api/itemData';
 import ViewItemModal from './ViewItemModal';
 
-export default function ItemCard({ itemObj, onUpdate }) {
+export default function ItemCard({ itemObj, onUpdate, reload }) {
   const [showModal, setShowModal] = useState(false);
 
   const itemDeleter = (e) => {
@@ -31,8 +31,8 @@ export default function ItemCard({ itemObj, onUpdate }) {
       <ViewItemModal
         show={showModal}
         handleClose={handleClose}
+        reload={reload}
         itemObj={itemObj}
-        initialData={itemObj}
       />
     </>
   );
@@ -44,5 +44,6 @@ ItemCard.propTypes = {
     itemName: PropTypes.string,
     type: PropTypes.string,
   }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
-};
+  onUpdate: PropTypes.func,
+  reload: PropTypes.func,
+}.isRequired;

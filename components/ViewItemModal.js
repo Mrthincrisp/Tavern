@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getSingleItem, updateItem } from '../api/itemData';
 
 export default function ViewItemModal({
-  show, handleClose, reload, itemObj,
+  show, handleClose, itemObj, reload,
 }) {
   const [tempData, setTempData] = useState({});
   const [edit, setEdit] = useState(false);

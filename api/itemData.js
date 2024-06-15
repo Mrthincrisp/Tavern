@@ -20,6 +20,48 @@ const getItems = (characterId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getEquipedItems = (characterId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/items.json?orderBy="characterId"&equalTo="${characterId}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const filteredData = Object.values(data)
+          .filter((item) => item.equiped === true) // filters the data to grab items by the equiped key
+          .sort((a, b) => a.listIndex - b.listIndex); // sorts the items by index to be displayed when mapped
+        resolve(filteredData);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+const getUnequipedItems = (characterId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/items.json?orderBy="characterId"&equalTo="${characterId}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const filteredData = Object.values(data)
+          .filter((item) => item.equiped === false)
+          .sort((a, b) => a.listIndex - b.listIndex);
+        resolve(filteredData);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 const createItem = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/items.json`, {
     method: 'POST',
@@ -89,4 +131,6 @@ export {
   deleteItem,
   getSingleItem,
   getCharacterItems,
+  getEquipedItems,
+  getUnequipedItems,
 };
