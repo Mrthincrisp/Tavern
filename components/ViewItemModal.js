@@ -35,9 +35,9 @@ export default function ViewItemModal({
         <Form>
           <Modal.Header>
 
-            <Modal.Title className="input item-input item-name">
+            <Modal.Title className="item-input item-name">
               <input
-                className="input"
+                className="name-input"
                 type="text"
                 name="itemName"
                 value={tempData?.itemName || ''}
@@ -47,9 +47,9 @@ export default function ViewItemModal({
             </Modal.Title>
           </Modal.Header>
 
-          <Modal.Body className="input item-input item-description">
+          <Modal.Body className="item-input item-description">
             <textarea
-              className="input description-field"
+              className="description-field"
               type="text"
               name="specialEffect"
               value={tempData?.specialEffect || ''}
@@ -57,10 +57,11 @@ export default function ViewItemModal({
               readOnly={!edit}
             />
             {itemObj.type === 'gear' && (
-            <>
+            <div className="form-grid">
               <Form.Group>
                 <Form.Label>Str</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="str"
@@ -73,6 +74,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>Dex</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="dex"
@@ -85,6 +87,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>int</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="int"
@@ -97,6 +100,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>wis</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="wis"
@@ -109,6 +113,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>chr</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="chr"
@@ -121,6 +126,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>con</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="con"
@@ -133,6 +139,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>hp</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="hp"
@@ -145,6 +152,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>ac</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="ac"
@@ -157,6 +165,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>attackBonus</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="attackBonus"
@@ -169,6 +178,7 @@ export default function ViewItemModal({
               <Form.Group>
                 <Form.Label>damageBonus</Form.Label>
                 <Form.Control
+                  className="modal-input"
                   type="number"
                   placeholder="0"
                   name="damageBonus"
@@ -178,7 +188,7 @@ export default function ViewItemModal({
                 />
               </Form.Group>
 
-            </>
+            </div>
             )}
 
           </Modal.Body>

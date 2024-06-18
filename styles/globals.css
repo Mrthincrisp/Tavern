@@ -1,11 +1,9 @@
 @import 'bootstrap/dist/css/bootstrap.css';
 
-html,
-body {
+html, body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -13,7 +11,7 @@ a {
   text-decoration: none;
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -21,43 +19,39 @@ body {
   background-color: #8a714b;
 }
 
-.sign-in{
-  background-repeat: no-repeat;
-  background-size: cover; /* Or 'contain', or specific dimensions like '100px 100px' */
-  background-position: center; 
-  background-image: url("https://images.playground.com/cdcb9fa7b586406ea1942dd2260a7d5d.jpeg");
+.sign-in {
+  background: url("https://images.playground.com/cdcb9fa7b586406ea1942dd2260a7d5d.jpeg") center/cover no-repeat;
   height: 100vh;
   padding: 30px;
-  max-width: auto;
   margin: 0 auto;
   color: #fff;
 }
 
-.login-btn{
+.login-btn {
   margin: 0 auto;
   width: 50%;
   box-shadow: 5px 5px 5px rgb(10, 5, 5);
 }
 
-.login-sub-text{
+.login-sub-text {
   color: rgb(250, 253, 253);
   font-weight: 500;
 }
 
-.view-image{
+.view-image {
   width: 100px;
   height: 100px;
-  border-radius: 50%; 
-  object-fit: cover; 
-  border: 2px solid #fff; 
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.header{
+.header {
   text-align: center;
 }
 
-.button {
+.button, .form {
   margin: 2px;
 }
 
@@ -65,9 +59,9 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 5px;  
+  gap: 5px;
   margin: 0 auto;
-  padding: 10px; 
+  padding: 10px;
 }
 
 .selection-card {
@@ -83,27 +77,28 @@ body {
 }
 
 .card-image-container {
-  width: fit-content; /* Shrink-wrap around the content */
+  width: fit-content;
   height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;  
+  border-radius: 50%;
 }
 
 .card-image {
-  width: 100%; 
+  width: 100%;
   height: 100%;
-  border-radius: 50%; 
-  object-fit: cover; 
-  border: 2px solid #ffffff; 
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
+
 .card-body {
   text-align: center;
 }
 
-.spell-card{
+.spell-card {
   flex: 1 1 30%;
   display: flex;
   flex-direction: row;
@@ -132,6 +127,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
+  font-size: 14px;
 }
 
 .layout-container {
@@ -145,39 +141,27 @@ body {
 
 .character-view {
   flex: 1;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .spell-box {
   flex: 2;
-  margin-left: 10px; 
-}
-
-.form {
-  margin: 3px;
+  margin-left: 10px;
 }
 
 .input {
   border: 0;
 }
 
-.full-size {
+.full-size, .description-field, .spell-description {
   width: 100%;
   height: 100%;
-  box-sizing: border-box; 
-}
-
-.description-field{
-  width: 100%;
-  height: 100%;
+  box-sizing: border-box;
 }
 
 .spell-description {
-
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100%; 
   flex-grow: 1;
 }
 
@@ -198,8 +182,7 @@ body {
   margin-top: 10px;
 }
 
-.RichEditor-editor .public-DraftEditorPlaceholder-root,
-.RichEditor-editor .public-DraftEditor-content {
+.RichEditor-editor .public-DraftEditorPlaceholder-root, .RichEditor-editor .public-DraftEditor-content {
   margin: 0 -15px -15px;
   padding: 15px;
 }
@@ -212,7 +195,6 @@ body {
   display: none;
 }
 
-/* This style is applied from the getBlockStyle function in the RTE */
 .RichEditor-editor .RichEditor-blockquote {
   border-left: 5px solid #eee;
   color: #0f0808;
@@ -253,13 +235,56 @@ body {
 }
 
 .editor-tab-box {
-  width: 20%; 
+  width: 20%;
 }
 
 .editor-display-box {
-  flex: 1; 
+  flex: 1;
 }
 
 .item-card {
   cursor: pointer;
+}
+
+.character-input, .name-input {
+  background-color: rgba(77, 51, 22, 0.308);
+  border-radius: 5px;
+}
+
+.character-input {
+  width: 20%;
+}
+
+.name-input {
+  border: 0;
+  margin: 3px;
+}
+
+.accordion-button {
+  padding: 0;
+  width: 50%;
+  margin-top: 5px;
+}
+
+.accordion-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.accordion-button:active {
+  background-color: #ccc;
+}
+
+.accordion-header {
+  font-size: 16px;
+}
+
+.accordion-body {
+  font-size: 14px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
