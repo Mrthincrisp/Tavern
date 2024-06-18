@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Tab, Tabs } from 'react-bootstrap';
 import CharacterView from '../../components/characterProfile/CharacterView';
 import { getSingleCharacter } from '../../api/characterData';
 import SpellBox from '../../components/characterProfile/SpellBox';
+import DiceBox from '../../components/characterProfile/DiceBox';
 
 export default function CharacterSheet() {
   const [characterData, setCharacterData] = useState({});
@@ -18,8 +20,23 @@ export default function CharacterSheet() {
       <div className="character-view">
         <CharacterView charObj={characterData} />
       </div>
-      <div className="spell-box">
-        <SpellBox charKey={characterData.firebaseKey} />
+      <div className="tab-box">
+        <Tabs defaultActiveKey="profile" id="justify-tab-example" justify>
+          <Tab eventKey="profile" title="Spells">
+            <div className="tab-content">
+              <div className="spell-box">
+                <SpellBox charKey={characterData.firebaseKey} />
+              </div>
+            </div>
+          </Tab>
+          <Tab eventKey="dice" title="Dice Box">
+            <div className="tab-content">
+              <div>
+                <DiceBox />
+              </div>
+            </div>
+          </Tab>
+        </Tabs>
       </div>
     </div>
   );
