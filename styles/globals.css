@@ -122,6 +122,7 @@ body {
   align-items: center;
 }
 
+
 .modifiers {
   display: flex;
   flex-direction: column;
@@ -251,10 +252,24 @@ padding: 10px
 
 .item-card {
   cursor: pointer;
+  max-width: 33%;
+  min-width: 33%;
+  width: 33%;
+}
+
+.item-box {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .character-input, .name-input {
   background-color: rgba(77, 51, 22, 0.308);
+  
   border-radius: 5px;
 }
 
@@ -264,7 +279,12 @@ padding: 10px
 
 .name-input {
   border: 0;
+  text-align: center;
   margin: 3px;
+}
+
+.level-row {
+  text-align: center;
 }
 
 .accordion-button {
@@ -294,4 +314,70 @@ padding: 10px
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+}
+
+.stat-and-effect-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  gap: 20px;
+}
+
+.stat-box {
+  flex: 1; 
+  
+}
+
+.effect-box {
+  flex: 1;
+}
+
+.dicebox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #883633;
+}
+
+.small-dice-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.die-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.large-dice-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.dice-input {
+  width: 60px;
+}
+
+.result-box {
+  width: 100px;
+  height: 50px;
+}
+
+.result-header {
+  margin-top: 10px;
+}
+
+#button-addon2 {
+  margin-top: 10px;
+}
+
+
+.total {
+  font-size: 7em;
 }

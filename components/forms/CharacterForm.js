@@ -19,7 +19,7 @@ const initialState = {
   wis: 0,
   chr: 0,
   con: 0,
-  hp: 0,
+  baseHp: 0,
 };
 
 export default function NewCharacterForm() {
@@ -184,8 +184,8 @@ export default function NewCharacterForm() {
           <Form.Control
             required
             type="number"
-            name="hp"
-            value={formInput.hp}
+            name="baseHp"
+            value={formInput.baseHp}
             onChange={handleChange}
           />
         </Form.Group>
@@ -210,7 +210,7 @@ NewCharacterForm.propTypes = {
     wis: PropTypes.number,
     chr: PropTypes.number,
     con: PropTypes.number,
-    hp: PropTypes.number,
+    baseHp: PropTypes.number,
   }),
 };
 // default values to be used when first initialized
