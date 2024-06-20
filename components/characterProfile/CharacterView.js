@@ -1,7 +1,9 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionBody, AccordionHeader, Button, Card, Form,
+  ListGroup,
 } from 'react-bootstrap';
 import { PropTypes } from 'prop-types';
 import { updateCharacter } from '../../api/characterData';
@@ -32,6 +34,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
     getEquipedItems(charObj.firebaseKey).then(setGearStats);
   }, [charObj.firebaseKey]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     const gearValue = { // sets a base to add the array data into
       ac: 0,
@@ -47,6 +50,8 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
       wis: 0,
     };
 
+    if (gearStats.length <= 0) return setCharGear(gearValue); // default value if no gear is made yet
+
     gearStats.forEach((obj) => { // combines the data from the array into one object
       gearValue.ac += parseInt(obj.ac, 10);
       gearValue.attackBonus += parseInt(obj.attackBonus, 10);
@@ -60,7 +65,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
       gearValue.str += parseInt(obj.str, 10);
       gearValue.wis += parseInt(obj.wis, 10);
 
-      setCharGear(gearValue); // sets charGear to the new object
+      return setCharGear(gearValue); // sets charGear to the new object
     });
   }, [gearStats]);
 
@@ -93,7 +98,10 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
           label="Edit Character"
           checked={edit}
           onChange={() => { setEdit(!edit); }}
-        /> {charObj.characterClass} {charObj.level}
+        />
+        {edit && (
+        <Button onClick={characterUpdater} className="save">save</Button>
+        )}
         <div>
           <Card.Img className="view-image" src={tempData.image} />
         </div>
@@ -118,145 +126,171 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
           />
 
         </h4>
-        {edit && (
-        <Button onClick={characterUpdater} className="save">save</Button>
-        )}
+        <div className="level-row">{charObj.characterClass} <input
+          className="character-input character-con"
+          type="number"
+          name="level"
+          value={tempData?.level || ''}
+          onChange={handleChange}
+          readOnly={!edit}
+        />
+        </div>
         <div className="health-box" />
-        <div className="stat-box"> STATS
-          <div>AttackBonus: {charGear.attackBonus} </div>
-          <div>DamageBonus: {charGear.damageBonus} </div>
-          <Card.Text>
-            BaseHP: {charGear.hp}/ <input
-              className="character-input character-health"
-              type="number"
-              name="hp"
-              value={tempData?.hp || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-            <div>Gear HP: {charGear.hp} </div>
-          </Card.Text>
+        <div className="stat-and-effect-container">
+          <div className="stat-box"> STATS
+            <ListGroup>
+              <ListGroup.Item>AttackBonus: {charGear.attackBonus}
+                <div>DamageBonus: {charGear.damageBonus} </div>
+              </ListGroup.Item>
 
-          <Card.Text className="stat">Constitution: {(charGear.con + parseInt(tempData.con))}
-            <div>Base: <input
-              className="character-input character-con"
-              type="number"
-              name="con"
-              value={tempData?.con || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-              <div>Gear:{charGear.con}</div>
-            </div>
-          </Card.Text>
+              <Card.Text className="stat">
+                Max HP: {charGear.hp + parseInt(tempData.baseHp)}/ <input
+                  className="character-input character-health"
+                  type="number"
+                  name="currentHp"
+                  value={tempData?.currentHp || tempData?.baseHp || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                <div>
+                  Base HP: <input
+                    className="character-input character-health"
+                    type="number"
+                    name="baseHp"
+                    value={tempData?.baseHp || ''}
+                    onChange={handleChange}
+                    readOnly={!edit}
+                  />
+                </div>
+                <div>Gear HP: {charGear.hp} </div>
+              </Card.Text>
 
-          <Card.Text className="stat">Charisma: {statTotals(charGear.chr, tempData.chr)}
-            <div>Base: <input
-              className="character-input character-chr"
-              name="chr"
-              value={tempData?.chr || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-            </div>
-            <div>Gear: {charGear.chr}</div>
-            <Accordion className="accordion">
-              <AccordionHeader className="accordion-header"> Chr Skills</AccordionHeader>
-              <AccordionBody className="accordion-body">
+              <ListGroup.Item className="stat">Constitution: {(charGear.con + parseInt(tempData.con))}
+                <div>Base: <input
+                  className="character-input character-con"
+                  type="number"
+                  name="con"
+                  value={tempData?.con || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                  <div>Gear:{charGear.con}</div>
+                </div>
+              </ListGroup.Item>
+
+              <Card.Text className="stat">Charisma: {statTotals(charGear.chr, tempData.chr)}
+                <div>Base: <input
+                  className="character-input character-chr"
+                  name="chr"
+                  value={tempData?.chr || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                </div>
+                <div>Gear: {charGear.chr}</div>
+                <Accordion className="accordion">
+                  <AccordionHeader className="accordion-header"> Chr Skills</AccordionHeader>
+                  <AccordionBody className="accordion-body">
+                    <span className="modifiers">
+                      Deception: {modifier(statTotals(charGear.chr, tempData.chr))}
+                      <span>Intimidation: {modifier(statTotals(charGear.chr, tempData.chr))}</span> {/* span is used because card.text is considered a <p> tag */}
+                      <span>Performance: {modifier(statTotals(charGear.chr, tempData.chr))}</span>
+                      <span>Survival: {modifier(statTotals(charGear.chr, tempData.chr))}</span>
+                    </span>
+                  </AccordionBody>
+                </Accordion>
+              </Card.Text>
+
+              <ListGroup.Item className="stat">Strength: {statTotals(charGear.str, tempData.str)}
+                <div> Base: <input
+                  className="character-input character-str"
+                  name="str"
+                  value={tempData?.str || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                </div>
+                <div>Gear: {charGear.str}</div>
                 <span className="modifiers">
-                  Deception: {modifier(statTotals(charGear.chr, tempData.chr))}
-                  <span>Intimidation: {modifier(statTotals(charGear.chr, tempData.chr))}</span> {/* span is used because card.text is considered a <p> tag */}
-                  <span>Performance: {modifier(statTotals(charGear.chr, tempData.chr))}</span>
-                  <span>Survival: {modifier(statTotals(charGear.chr, tempData.chr))}</span>
+                  Athletics: {modifier(statTotals(charGear.str, tempData.str))}
                 </span>
-              </AccordionBody>
-            </Accordion>
-          </Card.Text>
+              </ListGroup.Item>
 
-          <Card.Text className="stat">Strength: {statTotals(charGear.str, tempData.str)}
-            <div> Base: <input
-              className="character-input character-str"
-              name="str"
-              value={tempData?.str || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-            </div>
-            <div>Gear: {charGear.str}</div>
-            <span className="modifiers">
-              Athletics: {modifier(statTotals(charGear.str, tempData.str))}
-            </span>
-          </Card.Text>
+              <Card.Text className="stat">Dexterity: {statTotals(charGear.dex, tempData.dex)}
+                <div>Base: <input
+                  className="character-input character-dex"
+                  name="dex"
+                  value={tempData?.dex || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                </div>
+                <div>Gear: {charGear.dex}</div>
+                <Accordion className="accordion">
+                  <AccordionHeader className="accordion-header"> Dex Skills</AccordionHeader>
+                  <AccordionBody className="accordion-body">
+                    <span className="modifiers">
+                      <span>Acrobatics: {modifier(statTotals(charGear.dex, tempData.dex))}</span>
+                      <span>Sleight of Hand: {modifier(statTotals(charGear.dex, tempData.dex))}</span>
+                      <span>Stealth: {modifier(statTotals(charGear.dex, tempData.dex))}</span>
+                    </span>
+                  </AccordionBody>
+                </Accordion>
+              </Card.Text>
 
-          <Card.Text className="stat">Dexterity: {statTotals(charGear.dex, tempData.dex)}
-            <div>Base: <input
-              className="character-input character-dex"
-              name="dex"
-              value={tempData?.dex || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-            </div>
-            <div>Gear: {charGear.dex}</div>
-            <Accordion className="accordion">
-              <AccordionHeader className="accordion-header"> Dex Skills</AccordionHeader>
-              <AccordionBody className="accordion-body">
-                <span className="modifiers">
-                  <span>Acrobatics: {modifier(statTotals(charGear.dex, tempData.dex))}</span>
-                  <span>Sleight of Hand: {modifier(statTotals(charGear.dex, tempData.dex))}</span>
-                  <span>Stealth: {modifier(statTotals(charGear.dex, tempData.dex))}</span>
-                </span>
-              </AccordionBody>
-            </Accordion>
-          </Card.Text>
+              <ListGroup.Item className="stat">Intelligence: {statTotals(charGear.int, tempData.int)}
+                <div>Base: <input
+                  className="character-input character-int"
+                  name="int"
+                  value={tempData?.int || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                </div>
+                <div>Gear: {charGear.int}</div>
+                <Accordion className="accordion">
+                  <AccordionHeader className="accordion-header"> Int Skills</AccordionHeader>
+                  <AccordionBody className="accordion-body">
+                    <span className="modifiers">
+                      <span>Arcana: {modifier(tempData.int)}</span>
+                      <span>History: {modifier(tempData.int)}</span>
+                      <span>Investigation: {modifier(tempData.int)}</span>
+                      <span>Nature: {modifier(tempData.int)}</span>
+                      <span>Religion: {modifier(tempData.int)}</span>
+                    </span>
+                  </AccordionBody>
+                </Accordion>
+              </ListGroup.Item>
 
-          <Card.Text className="stat">Intelligence: {statTotals(charGear.int, tempData.int)}
-            <div>Base: <input
-              className="character-input character-int"
-              name="int"
-              value={tempData?.int || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-            </div>
-            <div>Gear: {charGear.int}</div>
-            <Accordion className="accordion">
-              <AccordionHeader className="accordion-header"> Int Skills</AccordionHeader>
-              <AccordionBody className="accordion-body">
-                <span className="modifiers">
-                  <span>Arcana: {modifier(tempData.int)}</span>
-                  <span>History: {modifier(tempData.int)}</span>
-                  <span>Investigation: {modifier(tempData.int)}</span>
-                  <span>Nature: {modifier(tempData.int)}</span>
-                  <span>Religion: {modifier(tempData.int)}</span>
-                </span>
-              </AccordionBody>
-            </Accordion>
-          </Card.Text>
-
-          <Card.Text className="stat">Wisdom: {statTotals(charGear.wis, tempData.wis)}
-            <div>Base: <input
-              className="character-input character-wis"
-              name="wis"
-              value={tempData?.wis || ''}
-              onChange={handleChange}
-              readOnly={!edit}
-            />
-            </div>
-            <div>Gear: {charGear.wis} </div>
-            <Accordion className="accordion">
-              <AccordionHeader className="accordion-header"> Wis Skills</AccordionHeader>
-              <AccordionBody className="accordion-body">
-                <span className="modifiers">
-                  <span>Animal Handling: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
-                  <span>Insight: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
-                  <span>Medicine: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
-                  <span>Perception: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
-                  <span>Survival: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
-                </span>
-              </AccordionBody>
-            </Accordion>
-          </Card.Text>
+              <Card.Text className="stat">Wisdom: {statTotals(charGear.wis, tempData.wis)}
+                <div>Base: <input
+                  className="character-input character-wis"
+                  name="wis"
+                  value={tempData?.wis || ''}
+                  onChange={handleChange}
+                  readOnly={!edit}
+                />
+                </div>
+                <div>Gear: {charGear.wis} </div>
+                <Accordion className="accordion">
+                  <AccordionHeader className="accordion-header"> Wis Skills</AccordionHeader>
+                  <AccordionBody className="accordion-body">
+                    <span className="modifiers">
+                      <span>Animal Handling: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
+                      <span>Insight: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
+                      <span>Medicine: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
+                      <span>Perception: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
+                      <span>Survival: {modifier(statTotals(charGear.wis, tempData.wis))}</span>
+                    </span>
+                  </AccordionBody>
+                </Accordion>
+              </Card.Text>
+            </ListGroup>
+          </div>
+          <div className="effect-box">
+            Special Effects:
+            {charGear.specialEffect?.map((effect, index) => (<ul key={index}>{effect}</ul>))}
+          </div>
         </div>
       </Card>
     </WindowWarning>
@@ -276,6 +310,7 @@ CharacterView.propTypes = {
     wis: PropTypes.number,
     chr: PropTypes.number,
     con: PropTypes.number,
-    hp: PropTypes.number,
+    baseHp: PropTypes.number,
+    currentHp: PropTypes.number,
   }).isRequired,
 };

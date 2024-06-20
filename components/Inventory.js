@@ -135,7 +135,7 @@ export default function Inventory({ characterId }) {
   };
 
   return (
-    <div>
+    <>
       equiped Items:
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="equipedItems">{/* droppableId is needed for Beautifil-dnd to recogize a list */}
@@ -176,21 +176,21 @@ export default function Inventory({ characterId }) {
             </div>
           )}
         </Droppable>
-
-        <Button className="button" onClick={handleShowButtonModal}>Add Item</Button>
-        <ButtonSelection
-          show={buttonModal}
-          hide={handleHideButtonModal}
-          handleItemType={handleItemType}
-        />
-        <InventoryForm
-          show={formModal}
-          handleClose={handleHideFormModal}
-          itemType={itemType}
-          reload={reload}
-        />
       </DragDropContext>
-    </div>
+
+      <Button className="button" onClick={handleShowButtonModal}>Add Item</Button>
+      <ButtonSelection
+        show={buttonModal}
+        hide={handleHideButtonModal}
+        handleItemType={handleItemType}
+      />
+      <InventoryForm
+        show={formModal}
+        handleClose={handleHideFormModal}
+        itemType={itemType}
+        reload={reload}
+      />
+    </>
   );
 }
 
