@@ -61,16 +61,13 @@ export default function SpellForm({
               onChange={handleChange}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" className="button">
-            Create New Spell
-          </Button>
+          <div className="btn-box">
+            <Button variant="primary" type="submit" className="button">
+              Create New Spell
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 }

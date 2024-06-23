@@ -38,14 +38,20 @@ export default function SpellBox({ charKey }) {
   return (
     <div>
       <Button className="button" onClick={handleShowCreateModal}>New Spell</Button> {/* Button to launch the SpellForm modal */}
-      {spells.map((spell) => (
-        <Card className="spell-card" key={spell.firebaseKey} style={{ width: '18rem' }}>
-          <Card.Body>
-            <Card.Title>{spell.spellName}</Card.Title>
-            <Button variant="primary" onClick={() => handleSpellKey(spell.firebaseKey)}>Details</Button> {/* Button to launch the ViewSpellModal */}
-          </Card.Body>
-        </Card>
-      ))}
+
+      {spells.length === 0 ? (
+        <h4>^ Create some spells.</h4>
+      ) : (
+
+        spells.map((spell) => (
+          <Card className="spell-card" key={spell.firebaseKey} style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title>{spell.spellName}</Card.Title>
+              <Button className="button" variant="primary" onClick={() => handleSpellKey(spell.firebaseKey)}>Details</Button> {/* Button to launch the ViewSpellModal */}
+            </Card.Body>
+          </Card>
+        ))
+      )}
       <SpellForm show={showCreateModal} handleClose={handleCloseCreateModal} reload={reload} charKey={charKey} /> {/* This Modal appears when the New Spell button is clicked */}
       { selectSpell && <ViewSpellModal show={showViewModal} handleClose={handleCloseViewModal} spellKey={selectSpell} reload={reload} />} {/* Conditional rendering to prevent unwanted modals from loading */}
     </div>

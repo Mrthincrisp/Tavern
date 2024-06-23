@@ -12,7 +12,6 @@ import { updateNote } from '../../api/noteData';
 // Custom overrides for "code" style.
 const styleMap = {
   CODE: { // uses the following for style that has CODE:
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
     fontSize: 16,
     padding: 2,
@@ -197,7 +196,7 @@ const RichTextEditor = ({ noteID, content, onSave }) => {
 
   return (
     <div className="RichEditor-root">
-      <Button onClick={updateTextContent}>save</Button>
+      <Button className="button" onClick={updateTextContent}>save</Button>
       <BlockStyleControls editorState={editorState} onToggle={toggleBlockType} /> {/* import of the functions above */}
       <InlineStyleControls editorState={editorState} onToggle={toggleInlineStyle} /> {/* import of the functions above */}
       <div

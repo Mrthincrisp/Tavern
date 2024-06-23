@@ -14,13 +14,12 @@ export default function CharacterCard({ charObj, onUpdate }) {
   return (
     <Card className="selection-card">
       <Card.Title>{charObj.fullName}</Card.Title>
-      <div className="card-image-container">
-        <Card.Img
-          variant="top"
-          src={charObj.image}
-          className="card-image"
-        />
-      </div>
+
+      <Card.Img
+        variant="top"
+        src={charObj.image}
+        className="card-image"
+      />
       <Card.Body className="card-body">
         <div className="button-group">
           <Link href={`/character/${charObj.firebaseKey}`} passHref>

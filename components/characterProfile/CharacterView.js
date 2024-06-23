@@ -100,7 +100,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
           onChange={() => { setEdit(!edit); }}
         />
         {edit && (
-        <Button onClick={characterUpdater} className="save">save</Button>
+        <Button onClick={characterUpdater} className="button save">save</Button>
         )}
         <div>
           <Card.Img className="view-image" src={tempData.image} />
@@ -139,7 +139,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
         <div className="stat-and-effect-container">
           <div className="stat-box"> STATS
             <ListGroup>
-              <ListGroup.Item>AttackBonus: {charGear.attackBonus}
+              <ListGroup.Item className="change">AttackBonus: {charGear.attackBonus}
                 <div>DamageBonus: {charGear.damageBonus} </div>
               </ListGroup.Item>
 
@@ -165,7 +165,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
                 <div>Gear HP: {charGear.hp} </div>
               </Card.Text>
 
-              <ListGroup.Item className="stat">Constitution: {(charGear.con + parseInt(tempData.con))}
+              <ListGroup.Item className="stat change">Constitution: {(charGear.con + parseInt(tempData.con))}
                 <div>Base: <input
                   className="character-input character-con"
                   type="number"
@@ -181,6 +181,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
               <Card.Text className="stat">Charisma: {statTotals(charGear.chr, tempData.chr)}
                 <div>Base: <input
                   className="character-input character-chr"
+                  type="number"
                   name="chr"
                   value={tempData?.chr || ''}
                   onChange={handleChange}
@@ -201,9 +202,10 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
                 </Accordion>
               </Card.Text>
 
-              <ListGroup.Item className="stat">Strength: {statTotals(charGear.str, tempData.str)}
+              <ListGroup.Item className="stat change">Strength: {statTotals(charGear.str, tempData.str)}
                 <div> Base: <input
                   className="character-input character-str"
+                  type="number"
                   name="str"
                   value={tempData?.str || ''}
                   onChange={handleChange}
@@ -211,14 +213,16 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
                 />
                 </div>
                 <div>Gear: {charGear.str}</div>
+                <p className="special-little-guy">Str Skills:</p>
                 <span className="modifiers">
                   Athletics: {modifier(statTotals(charGear.str, tempData.str))}
                 </span>
               </ListGroup.Item>
 
-              <Card.Text className="stat">Dexterity: {statTotals(charGear.dex, tempData.dex)}
+              <Card.Text className="stat ">Dexterity: {statTotals(charGear.dex, tempData.dex)}
                 <div>Base: <input
                   className="character-input character-dex"
+                  type="number"
                   name="dex"
                   value={tempData?.dex || ''}
                   onChange={handleChange}
@@ -238,9 +242,10 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
                 </Accordion>
               </Card.Text>
 
-              <ListGroup.Item className="stat">Intelligence: {statTotals(charGear.int, tempData.int)}
+              <ListGroup.Item className="stat change">Intelligence: {statTotals(charGear.int, tempData.int)}
                 <div>Base: <input
                   className="character-input character-int"
+                  type="number"
                   name="int"
                   value={tempData?.int || ''}
                   onChange={handleChange}
@@ -265,6 +270,7 @@ export default function CharacterView({ charObj }) { // charObj contains all dat
               <Card.Text className="stat">Wisdom: {statTotals(charGear.wis, tempData.wis)}
                 <div>Base: <input
                   className="character-input character-wis"
+                  type="number"
                   name="wis"
                   value={tempData?.wis || ''}
                   onChange={handleChange}

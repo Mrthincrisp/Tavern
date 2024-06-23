@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import {
-  Button, Form, Modal, Row,
-} from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { createItem, updateItem } from '../../api/itemData';
 
 const initialState = {
@@ -87,108 +85,106 @@ export default function InventoryForm({
             </Form.Group>
 
             {itemType === 'gear' && (
-              <>
-                <Row className="mb-3">
-                  <Form.Group controlId="formGridStr">
-                    <Form.Label>Strength</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="str"
-                      value={formInput.str}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+              <div className="form-grid">
+                <Form.Group controlId="formGridStr">
+                  <Form.Label>Strength</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="str"
+                    value={formInput.str}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridDex">
-                    <Form.Label>Dexterity</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="dex"
-                      value={formInput.dex}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridDex">
+                  <Form.Label>Dexterity</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="dex"
+                    value={formInput.dex}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridCon">
-                    <Form.Label>Constitution</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="con"
-                      value={formInput.con}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridCon">
+                  <Form.Label>Constitution</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="con"
+                    value={formInput.con}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridInt">
-                    <Form.Label>Intelligence</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="int"
-                      value={formInput.int}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridInt">
+                  <Form.Label>Intelligence</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="int"
+                    value={formInput.int}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridWis">
-                    <Form.Label>Wisdom</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="wis"
-                      value={formInput.wis}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridWis">
+                  <Form.Label>Wisdom</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="wis"
+                    value={formInput.wis}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridChr">
-                    <Form.Label>Charisma</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="chr"
-                      value={formInput.chr}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridChr">
+                  <Form.Label>Charisma</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="chr"
+                    value={formInput.chr}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridHp">
-                    <Form.Label>Health Points</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="hp"
-                      value={formInput.hp}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridHp">
+                  <Form.Label>Health Points</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="hp"
+                    value={formInput.hp}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridAtkBonus">
-                    <Form.Label>Attack Bonus</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="attackBonus"
-                      value={formInput.attackBonus}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Form.Group controlId="formGridAtkBonus">
+                  <Form.Label>Attack Bonus</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="attackBonus"
+                    value={formInput.attackBonus}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-                  <Form.Group controlId="formGridDmgbonus">
-                    <Form.Label>Damage Bonus</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="damageBonus"
-                      value={formInput.damageBonus}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </Row>
-              </>
+                <Form.Group controlId="formGridDmgbonus">
+                  <Form.Label>Damage Bonus</Form.Label>
+                  <Form.Control
+                    required
+                    type="number"
+                    name="damageBonus"
+                    value={formInput.damageBonus}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </div>
             )}
 
             <Form.Group>
@@ -212,17 +208,13 @@ export default function InventoryForm({
                 onChange={handleChange}
               />
             </Form.Group>
-
-            <Button variant="primary" type="submit" className="button">
-              Create New Item
-            </Button>
+            <div className="btn-box">
+              <Button variant="primary" type="submit" className="button">
+                Create New Item
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

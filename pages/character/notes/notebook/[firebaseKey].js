@@ -25,6 +25,17 @@ const Notebook = () => {
     handleHideModal();
   };
 
+  const save = () => {
+    if (window.alert('Entry Saved.')) {
+      getNotes(firebaseKey).then(setNotes);
+      handleHideModal();
+    }
+  };
+
+  const closeEditor = () => {
+    setSelectedNote(null);
+  };
+
   useEffect(() => {
     getCharacterNotes(firebaseKey);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,28 +47,33 @@ const Notebook = () => {
 
   return (
     <div className="note-page-container">
-      <Button variant="primary button" onClick={handleShowModal}>
-        Add Note
-      </Button>
       <div className="note-content">
         <div className="editor-tab-box">
+          <Button variant="primary button" onClick={handleShowModal}>
+            Add Note
+          </Button>
           {notes.map((note) => (
             <NoteTabCard
               key={note.firebaseKey}
               noteObj={note}
               onUpdate={getCharacterNotes}
               onOpen={() => handleOpen(note)}
+              onClose={() => closeEditor()}
             />
-          ))}  {/* on Open sets the selected note when "opening" a tab, thus loading the editor with the notes data */}
+          ))}
+
           <NoteForm show={showModal} handleClose={handleHideModal} reload={reload} />
         </div>
         {selectedNote && (
-          <div className="editor-display-box">
-            <RichTextEditor
-              noteID={selectedNote.firebaseKey}
-              content={selectedNote.content}
-              onSave={reload}
-            />
+          <div className="editor-container">
+            <h2 className="note-title">{selectedNote.noteTitle}</h2>
+            <div className="editor-display-box">
+              <RichTextEditor
+                noteID={selectedNote.firebaseKey}
+                content={selectedNote.content}
+                onSave={save}
+              />
+            </div>
           </div>
         )}
       </div>

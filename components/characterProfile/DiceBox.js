@@ -82,7 +82,7 @@ export default function DiceBox() {
     <div className="dicebox-container">
       <div className="small-dice-row">
         <div className="die-box">
-          <h6> D4 </h6>
+          <h6 className="d-header"> D4 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
@@ -99,7 +99,7 @@ export default function DiceBox() {
         </div>
 
         <div className="die-box">
-          <h6> D6 </h6>
+          <h6 className="d-header"> D6 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
@@ -116,7 +116,7 @@ export default function DiceBox() {
         </div>
 
         <div className="die-box">
-          <h6> D8 </h6>
+          <h6 className="d-header"> D8 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
@@ -135,7 +135,7 @@ export default function DiceBox() {
 
       <div className="small-dice-row">
         <div className="die-box">
-          <h6> D10 </h6>
+          <h6 className="d-header"> D10 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
@@ -156,7 +156,7 @@ export default function DiceBox() {
         </div>
 
         <div className="die-box">
-          <h6> D12 </h6>
+          <h6 className="d-header"> D12 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
@@ -173,14 +173,14 @@ export default function DiceBox() {
         </div>
       </div>
 
-      <Button type="button" id="button-addon2" onClick={() => smallDiceRoller(4, foursRolled, fourResults)}>
+      <Button className="button" type="button" onClick={() => smallDiceRoller(4, foursRolled, fourResults)}>
         Roll Those Bones!
       </Button>
-      <Button id="button-addon2" type="button" onClick={reset}>Clear</Button>
+      <Button className="button clear-button" type="button" onClick={reset}>Clear</Button>
 
       <div className="large-dice-row">
         <div className="die-box">
-          <h6> D20 </h6>
+          <h6 className="result-header"> D20 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
@@ -188,7 +188,7 @@ export default function DiceBox() {
               value={twentiesRolled}
               onChange={handleChange(setTwentiesRolled)}
             />
-            <Button type="button" id="button-addon2" onClick={() => twentyRoller(20, twentiesRolled, twentyResults)}>
+            <Button type="button" onClick={() => twentyRoller(20, twentiesRolled, twentyResults)}>
               Roll!
             </Button>
           </InputGroup>
@@ -200,7 +200,7 @@ export default function DiceBox() {
         </div>
 
         <div className="die-box">
-          <h6> D100 </h6>
+          <h6 className="result-header"> D100 </h6>
           <InputGroup>
             <Form.Control
               className="dice-input"
