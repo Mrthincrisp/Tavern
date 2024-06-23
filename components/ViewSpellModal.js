@@ -63,7 +63,7 @@ export default function ViewSpellModal({
         </Modal.Body>
         <Modal.Footer>
           {edit && (
-          <Button onClick={spellUpdate} className="save">save</Button>
+          <Button onClick={spellUpdate} className="button save">save</Button>
           )}
           <Form.Check
             type="switch"
@@ -72,10 +72,10 @@ export default function ViewSpellModal({
             checked={edit}
             onChange={() => { setEdit(!edit); }}
           />
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className="button" variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button className="delete" onClick={spellDeleter}>Delete</Button>
+          <Button className="button delete" onClick={spellDeleter}>Delete</Button>
         </Modal.Footer>
       </Modal>
     </>

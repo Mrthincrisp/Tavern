@@ -47,153 +47,157 @@ export default function NewCharacterForm() {
   };
 
   return (
-    <Form className="form characterForm" onSubmit={handleSubmit}>
-      <h3 className="text headerText">Create Character</h3>
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridFullName">
-          <Form.Label>Character Name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Enter their name"
-            name="fullName"
-            value={formInput.fullName}
-            onChange={handleChange}
-          />
-        </Form.Group>
+    <>
+      <div className="text-wrapper">
+        <h3 className="headerText">Character Creator</h3>
+      </div>
+      <Form className="form characterForm" onSubmit={handleSubmit}>
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formGridFullName" className="name">
+            <Form.Label>Character Name</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Enter their name"
+              name="fullName"
+              value={formInput.fullName}
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridImage">
-          <Form.Label>Image</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Get their picture"
-            name="image"
-            value={formInput.image}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Row>
+          <Form.Group as={Col} controlId="formGridImage">
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Get their picture"
+              name="image"
+              value={formInput.image}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Row>
 
-      <Form.Group className="mb-3" controlId="formGridLevel">
-        <Form.Label>Level</Form.Label>
-        <Form.Control
-          required
-          type="number"
-          placeholder="1"
-          name="level"
-          value={formInput.level}
-          onChange={handleChange}
-        />
-      </Form.Group>
-
-      <Form.Group as={Col} controlId="formGridClass">
-        <Form.Label>Class</Form.Label>
-        <Form.Select
-          required
-          name="characterClass"
-          value={formInput.characterClass}
-          onChange={handleChange}
-        >
-          <option value="" disabled>Select a Class...</option>
-          <option value="Artificer">Artificer</option>
-          <option value="Barbarian">Barbarian</option>
-          <option value="Bard">Bard</option>
-          <option value="Cleric">Cleric</option>
-          <option value="Druid">Druid</option>
-          <option value="Fighter">Fighter</option>
-          <option value="Monk">Monk</option>
-          <option value="Paladin">Paladin</option>
-          <option value="Ranger">Ranger</option>
-          <option value="Rogue">Rogue</option>
-          <option value="Sorcerer">Sorcerer</option>
-          <option value="Warlock">Warlock</option>
-          <option value="Wizard">Wizard</option>
-        </Form.Select>
-      </Form.Group>
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridStr">
-          <Form.Label>Strength</Form.Label>
+        <Form.Group className="mb-3" controlId="formGridLevel">
+          <Form.Label>Level</Form.Label>
           <Form.Control
             required
             type="number"
-            name="str"
-            value={formInput.str}
+            placeholder="1"
+            name="level"
+            value={formInput.level}
             onChange={handleChange}
           />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridDex">
-          <Form.Label>Dexterity</Form.Label>
-          <Form.Control
+        <Form.Group as={Col} className="bar" controlId="formGridClass">
+          <Form.Label>Class</Form.Label>
+          <Form.Select
             required
-            type="number"
-            name="dex"
-            value={formInput.dex}
+            name="characterClass"
+            value={formInput.characterClass}
             onChange={handleChange}
-          />
+          >
+            <option value="" disabled>Select a Class...</option>
+            <option value="Artificer">Artificer</option>
+            <option value="Barbarian">Barbarian</option>
+            <option value="Bard">Bard</option>
+            <option value="Cleric">Cleric</option>
+            <option value="Druid">Druid</option>
+            <option value="Fighter">Fighter</option>
+            <option value="Monk">Monk</option>
+            <option value="Paladin">Paladin</option>
+            <option value="Ranger">Ranger</option>
+            <option value="Rogue">Rogue</option>
+            <option value="Sorcerer">Sorcerer</option>
+            <option value="Warlock">Warlock</option>
+            <option value="Wizard">Wizard</option>
+          </Form.Select>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridCon">
-          <Form.Label>Constitution</Form.Label>
-          <Form.Control
-            required
-            type="number"
-            name="con"
-            value={formInput.con}
-            onChange={handleChange}
-          />
-        </Form.Group>
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formGridStr">
+            <Form.Label>Strength</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="str"
+              value={formInput.str}
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridInt">
-          <Form.Label>Intelligence</Form.Label>
-          <Form.Control
-            required
-            type="number"
-            name="int"
-            value={formInput.int}
-            onChange={handleChange}
-          />
-        </Form.Group>
+          <Form.Group as={Col} controlId="formGridDex">
+            <Form.Label>Dexterity</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="dex"
+              value={formInput.dex}
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridWis">
-          <Form.Label>Wisdom</Form.Label>
-          <Form.Control
-            required
-            type="number"
-            name="wis"
-            value={formInput.wis}
-            onChange={handleChange}
-          />
-        </Form.Group>
+          <Form.Group as={Col} controlId="formGridCon">
+            <Form.Label>Constitution</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="con"
+              value={formInput.con}
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridChr">
-          <Form.Label>Charisma</Form.Label>
-          <Form.Control
-            required
-            type="number"
-            name="chr"
-            value={formInput.chr}
-            onChange={handleChange}
-          />
-        </Form.Group>
+          <Form.Group as={Col} controlId="formGridInt">
+            <Form.Label>Intelligence</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="int"
+              value={formInput.int}
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridHp">
-          <Form.Label>Health Points</Form.Label>
-          <Form.Control
-            required
-            type="number"
-            name="baseHp"
-            value={formInput.baseHp}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Row>
-      <Button className="button submit submit-button" variant="primary" type="submit">
-        Create Character
-      </Button>
-    </Form>
+          <Form.Group as={Col} controlId="formGridWis">
+            <Form.Label>Wisdom</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="wis"
+              value={formInput.wis}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridChr">
+            <Form.Label>Charisma</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="chr"
+              value={formInput.chr}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridHp">
+            <Form.Label>Health Points</Form.Label>
+            <Form.Control
+              required
+              type="number"
+              name="baseHp"
+              value={formInput.baseHp}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Row>
+        <Button className="button submit submit-button" variant="primary" type="submit">
+          Create Character
+        </Button>
+      </Form>
+    </>
   );
 }
 // defining the expected types for each prop

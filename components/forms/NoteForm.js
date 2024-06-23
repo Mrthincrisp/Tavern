@@ -45,6 +45,7 @@ export default function NoteForm({
           <Form.Group>
             <Form.Label>Name</Form.Label>
             <Form.Control
+              required
               type="text"
               placeholder="Entry Title"
               name="noteTitle"
@@ -52,9 +53,11 @@ export default function NoteForm({
               onChange={handleChange}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" className="button">
-            Create New Note
-          </Button>
+          <div className="btn-box">
+            <Button variant="primary" type="submit" className="button">
+              Create New Note
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

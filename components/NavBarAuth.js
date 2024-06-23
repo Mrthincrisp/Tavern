@@ -43,6 +43,11 @@ export default function NavBarAuth() {
               </>
             )}
           </Nav>
+          {!firebaseKey && (
+          <Link href="character/new" passHref>
+            <Button className="button create create-character-button">Create a Character</Button>
+          </Link>
+          )}
           <Button variant="danger" onClick={signOut}>Sign Out</Button>
         </Navbar.Collapse>
       </Container>

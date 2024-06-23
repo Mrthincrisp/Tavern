@@ -3,10 +3,12 @@ import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { deleteNote } from '../api/noteData';
 
-export default function NoteTabCard({ noteObj, onUpdate, onOpen }) {
+export default function NoteTabCard({
+  noteObj, onUpdate, onOpen, onClose,
+}) {
   const noteDeleter = () => {
     if (window.confirm('Delete this note?')) {
-      deleteNote(noteObj.firebaseKey).then(() => onUpdate());
+      deleteNote(noteObj.firebaseKey).then(onUpdate).then(onClose);
     }
   };
   return (

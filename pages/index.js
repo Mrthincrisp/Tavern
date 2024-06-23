@@ -1,5 +1,3 @@
-import { Button } from 'react-bootstrap';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import { getCharacters } from '../api/characterData';
@@ -19,11 +17,10 @@ function Home() {
   }, [user.uid]);
 
   return (
-    <div>
-      <h1 className="header">Hello {user.displayName}! </h1>
-      <Link href="character/new" passHref>
-        <Button className="button create create-character-button">Create a Character</Button>
-      </Link>
+    <div className="home">
+      <div className="text-wrapper">
+        <h1 className="header">Which table would you like? </h1>
+      </div>
       <div className="character-card">
         {character.map((char) => (
           <CharacterCard key={char.firebaseKey} charObj={char} onUpdate={getAllCharacters} />

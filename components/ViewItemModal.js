@@ -195,7 +195,7 @@ export default function ViewItemModal({
 
           <Modal.Footer>
             {edit && (
-            <Button onClick={itemUpdate} className="save">save</Button>
+            <Button onClick={itemUpdate} className="button save">save</Button>
             )}
             <Form.Check
               type="switch"
@@ -204,7 +204,7 @@ export default function ViewItemModal({
               checked={edit}
               onChange={() => { setEdit(!edit); }}
             />
-            <Button variant="secondary" onClick={handleClose}>
+            <Button className="button" variant="secondary" onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>

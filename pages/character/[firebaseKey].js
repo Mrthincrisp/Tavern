@@ -21,15 +21,15 @@ export default function CharacterSheet() {
         <CharacterView charObj={characterData} />
       </div>
       <div className="tab-box">
-        <Tabs defaultActiveKey="profile" id="justify-tab-example" justify>
-          <Tab eventKey="profile" title="Spells">
+        <Tabs defaultActiveKey="profile" className="justify-tab-example custom-tab" justify>
+          <Tab eventKey="profile" title="Spells" className="tab-text">
             <div className="tab-content">
               <div className="spell-box">
                 <SpellBox charKey={characterData.firebaseKey} />
               </div>
             </div>
           </Tab>
-          <Tab eventKey="dice" title="Dice Box">
+          <Tab eventKey="dice" title="Dice Box" className="tab-text">
             <div className="tab-content">
               <div>
                 <DiceBox />

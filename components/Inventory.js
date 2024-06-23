@@ -13,8 +13,10 @@ export const ButtonSelection = ({ show, hide, handleItemType }) => (
       <Modal.Title>Which item type are you making?</Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      <Button className="button" onClick={() => handleItemType('item')}>item</Button>
-      <Button className="button" onClick={() => handleItemType('gear')}>gear</Button>
+      <div className="item-selection-box">
+        <Button className="button" onClick={() => handleItemType('item')}>item</Button>
+        <Button className="button" onClick={() => handleItemType('gear')}>gear</Button>
+      </div>
     </Modal.Body>
   </Modal>
 );
@@ -24,14 +26,17 @@ ButtonSelection.propTypes = {
   handleItemType: PropTypes.func,
 }.isRequired;
 
-export default function Inventory({ characterId }) {
+export function Inventory({ characterId }) {
   const [equipedItems, setEquipedItems] = useState([]);
   const [unequipedItems, setUnequipedItems] = useState([]);
   const [itemType, setItemType] = useState('');
   const [buttonModal, setButtonModal] = useState(false);
   const [formModal, setFormModal] = useState(false);
 
-  const handleShowButtonModal = () => setButtonModal(true);
+  const handleShowButtonModal = () => {
+    setButtonModal(true);
+    setItemType('');
+  };
   const handleHideButtonModal = () => setButtonModal(false);
 
   const handleHideFormModal = () => setFormModal(false);
@@ -43,7 +48,6 @@ export default function Inventory({ characterId }) {
   };
 
   const reload = () => { // a reload function used to update the cards being displayed when data is changed.
-    console.warn('click');
     getUnequipedItems(characterId).then(setUnequipedItems);
     getEquipedItems(characterId).then(setEquipedItems);
     handleHideFormModal();
@@ -136,60 +140,64 @@ export default function Inventory({ characterId }) {
 
   return (
     <>
-      equiped Items:
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="equipedItems">{/* droppableId is needed for Beautifil-dnd to recogize a list */}
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <ul className="character-equipment">
-                {equipedItems.map((gear, index) => (
-                  <Draggable key={gear.firebaseKey} draggableId={gear.firebaseKey} index={index}>
-                    {(provide) => (
-                      <ul ref={provide.innerRef} {...provide.draggableProps} {...provide.dragHandleProps}>
-                        <ItemCard itemObj={gear} onUpdate={getCharacterEquipment} reload={reload} />
-                      </ul>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </ul>
-            </div>
-          )}
-        </Droppable>
+      <div className="inventory-box">
+        <ButtonSelection
+          show={buttonModal}
+          hide={handleHideButtonModal}
+          handleItemType={handleItemType}
+        />
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="equipedItems">{/* droppableId is needed for Beautifil-dnd to recogize a list */}
+            {(provided) => (
+              <div className="equiped-list" ref={provided.innerRef} {...provided.droppableProps}>
+                equiped Items:
+                <ul className="character-equipment">
+                  {equipedItems.map((gear, index) => (
+                    <Draggable key={gear.firebaseKey} draggableId={gear.firebaseKey} index={index}>
+                      {(provide) => (
+                        <ul ref={provide.innerRef} {...provide.draggableProps} {...provide.dragHandleProps}>
+                          <ItemCard itemObj={gear} onUpdate={getCharacterEquipment} reload={reload} />
+                        </ul>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </ul>
+              </div>
+            )}
+          </Droppable>
 
-        <Droppable droppableId="unequipedItems">
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              unequiped:
-              <ul className="character-items">
-                {unequipedItems.map((item, index) => (
-                  <Draggable key={item.firebaseKey} draggableId={item.firebaseKey} index={index}>
-                    {(provide) => (
-                      <ul ref={provide.innerRef} {...provide.draggableProps} {...provide.dragHandleProps}>
-                        <ItemCard itemObj={item} onUpdate={getCharacterItems} reload={reload} />
-                      </ul>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </ul>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+          <Button className="item-button btn-primary top-button button" onClick={handleShowButtonModal}>Add Item</Button>
 
-      <Button className="button" onClick={handleShowButtonModal}>Add Item</Button>
-      <ButtonSelection
-        show={buttonModal}
-        hide={handleHideButtonModal}
-        handleItemType={handleItemType}
-      />
-      <InventoryForm
-        show={formModal}
-        handleClose={handleHideFormModal}
-        itemType={itemType}
-        reload={reload}
-      />
+          <Droppable droppableId="unequipedItems">
+            {(provided) => (
+              <div className="unequip-list" ref={provided.innerRef} {...provided.droppableProps}>
+
+                unequiped:
+                <ul className="character-items">
+                  {unequipedItems.map((item, index) => (
+                    <Draggable key={item.firebaseKey} draggableId={item.firebaseKey} index={index}>
+                      {(provide) => (
+                        <ul ref={provide.innerRef} {...provide.draggableProps} {...provide.dragHandleProps}>
+                          <ItemCard itemObj={item} onUpdate={getCharacterItems} reload={reload} />
+                        </ul>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </ul>
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+        <InventoryForm
+          show={formModal}
+          handleClose={handleHideFormModal}
+          itemType={itemType}
+          reload={reload}
+        />
+      </div>
     </>
   );
 }
